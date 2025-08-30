@@ -1,5 +1,6 @@
 package com.example.leftoverflow
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,11 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import com.example.leftoverflow.ui.SearchActivity
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -70,6 +73,7 @@ fun SplashScreen(navController: NavHostController) {
 
 @Composable
 fun HomeScreen() {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,24 +92,31 @@ fun HomeScreen() {
 
         // Welcome
         Text(
-            text = "Dobrodošli!",
+            text = "Welcome!",
             style = MaterialTheme.typography.headlineLarge
+        )
+        Text(
+            text = "What are we cooking?",
+            style = MaterialTheme.typography.headlineSmall
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         // Search bar
-        TextField(
-            value = "",
-            onValueChange = {},
-            placeholder = { Text("search, eggs, cake…") },
+
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .background(Color.LightGray, RoundedCornerShape(50)),
-            singleLine = true,
-            shape = RoundedCornerShape(50)
-        )
+                .background(Color.LightGray, RoundedCornerShape(50))
+                .clickable {
+                    val intent = Intent(context, SearchActivity::class.java)
+                    context.startActivity(intent)
+                }
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+        ) {
+            Text("search, eggs, cake…", color = Color.Gray)
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
