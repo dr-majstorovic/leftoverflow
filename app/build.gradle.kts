@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.kps)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -32,13 +34,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
+    buildToolsVersion = "36.0.0"
     buildFeatures {
         viewBinding = true
     }
@@ -47,46 +53,67 @@ android {
 
 dependencies {
 
+    // Kps
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.androidx.room.compiler)
+
+    // Core
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
+
+    // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.text.google.fonts)
+
+    // Material 3
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+
+    // Data Store
+    implementation(libs.androidx.datastore.preferences)
+
+    // Navigation
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.foundation)
-    implementation(libs.androidx.recyclerview)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
 
-    // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
 
-    // Lifecycle / ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
-    implementation ("com.google.android.material:material:1.12.0")
+    // Paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    // Hilt
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
 
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    kapt ("com.github.bumptech.glide:compiler:4.16.0")
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
-    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    // Shimmer
+    implementation(libs.compose.shimmer)
+
 }
