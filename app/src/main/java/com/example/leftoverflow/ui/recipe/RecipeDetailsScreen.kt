@@ -13,18 +13,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.leftoverflow.R
+import com.example.leftoverflow.data.model.RecipeDetailsViewModel
 
 @Composable
 fun RecipeDetailsScreen(
-    recipeTitle: String,
-    recipeType: String,
-    prepTime: String,
-    ingredients: List<String>,
-    steps: List<String>,
-    recipeImageRes: Int
+    recipeId: String,
+    viewModel: RecipeDetailsViewModel = viewModel()
 ) {
+    LaunchedEffect(recipeId) {
+    viewModel.loadRecipe(recipeId)
+    }
     val scrollState = rememberScrollState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Detalji recepta") })
+        }
+    ) { padding ->
+        if (recipe == null) {
+            Box(modifier = Modifier.padding(padding)) {
+                Text("Učitavanje...")
+            }
+        } else {
+            Column(modifier = Modifier.padding(padding).padding(16.dp)) {
+                Text(text = recipe!!.title, style = MaterialTheme.typography.headlineSmall)
+                Spacer(Modifier.height(8.dp))
+                Text(text = recipe!!.description)
+                Spacer(Modifier.height(16.dp))
+                Text("Sastojci:", style = MaterialTheme.typography.titleMedium)
+                recipe!!.ingredients.forEach {
+                    Text("- $it")
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier

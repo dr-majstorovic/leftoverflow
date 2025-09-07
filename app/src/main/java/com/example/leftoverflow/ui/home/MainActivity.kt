@@ -1,4 +1,4 @@
-package com.example.leftoverflow
+package com.example.leftoverflow.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,9 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
-import com.example.leftoverflow.ui.SearchActivity
+import com.example.leftoverflow.R
+import com.example.leftoverflow.ui.search.SearchActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
