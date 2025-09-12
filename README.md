@@ -1,3 +1,5 @@
 # Leftoverflow
-Leftowerflow je android aplikacija za pretragu recepata, pregled i čuvanje. Napisana je u jeziku Kotlin.
-Korisnički interfejs napravljen je po uzoru (iako ne savršeno) na <a href="https://www.figma.com/design/L81eouUaLl6PWbPQ79whke/Leftoverflow?node-id=6-19&t=uwTWMMnSmD9JDEsV-1" target="_blank">Figma projekat</a>
+Tokom razvoja ove aplikacije desilo se nešto što ne znam da objasnim.
+Samo znam da mi je Gradle prolupao, ne prepoznaje apsolutno nikakve ključne riječi.
+Jedino rješenje bilo je da započnem novi projekat.
+GitHub repozitorijum novog projekta pogledajte <a href="https://github.com/dr-majstorovic/leftoverflow-new" target="_blank">ovdje</a>
